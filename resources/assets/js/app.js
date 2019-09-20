@@ -9,22 +9,38 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+// Adding Vue Forms
+import { Form, HasError, AlertError } from 'vform';
+
+window.Form = Form;
+
+Vue.component(HasError.name, HasError)
+Vue.component(AlertError.name, AlertError)
 
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
+// Using seperate routes file for adding routes
 import {routes} from "./routes.js";
-
-// const routes = [
-//     { path: '/dashboard', component: require('./components/Dashboard.vue').default },
-//     { path: '/profile', component: require('./components/Profile.vue').default }
-// ]
 
 const router = new VueRouter({
     routes, // short for `routes: routes`
     mode: 'history'
 })
   
+// Adding Vue Filter to uppercase the required texts
+Vue.filter('uptext',function(text){
+    return text.charAt(0).toUpperCase() + text.slice(1)
+});
+
+
+// Adding moment filter for date conversion into human readble format
+import moment from 'moment';
+
+Vue.filter('myDate',function(created){
+    return moment(created).startOf('day').fromNow(); 
+});
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

@@ -3,6 +3,8 @@ import VueRouter from 'vue-router';
 
 import Dashboard from './components/Dashboard';
 import Profile from './components/Profile';
+import Users from './components/Users';
+
 
 Vue.use(VueRouter);
 
@@ -16,6 +18,11 @@ export const routes = [
         path : '/profile',
         name : 'profile',
         component : Profile
+    }, 
+    {
+        path : '/users',
+        name : 'users',
+        component : Users
     },           
         
     
