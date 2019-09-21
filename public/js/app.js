@@ -1962,19 +1962,34 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     createUser: function createUser() {
-      this.form.reset();
+      var _this2 = this;
+
       this.$Progress.start();
-      this.form.post('api/user');
-      $('#addUser').modal('hide');
-      Toast.fire({
-        type: 'success',
-        title: 'User Created Successfully !!!'
+      this.form.post('api/user').then(function () {
+        // Success
+        _this2.form.reset();
+
+        Fire.$emit('UserCreated');
+        $('#addUser').modal('hide');
+        Toast.fire({
+          type: 'success',
+          title: 'User Created Successfully !!!'
+        });
+
+        _this2.$Progress.end();
+      })["catch"](function () {
+        // Failure
+        _this2.$Progress.fail();
       });
-      this.$Progress.end();
     }
   },
   created: function created() {
+    var _this3 = this;
+
     this.loadUsers();
+    Fire.$on('UserCreated', function () {
+      _this3.loadUsers();
+    });
   }
 });
 
@@ -74413,7 +74428,10 @@ var toast = sweetalert2__WEBPACK_IMPORTED_MODULE_5___default.a.mixin({
   showConfirmButton: false,
   timer: 3000
 });
-window.Toast = toast;
+window.Toast = toast; // For making Custom events
+
+var Fire = new Vue();
+window.Fire = Fire;
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
