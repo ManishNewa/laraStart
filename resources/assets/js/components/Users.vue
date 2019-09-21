@@ -4,7 +4,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">DataTable with minimal features &amp; hover style</h3>
+                        <h3 class="card-title">Showing All Users</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addUser">
                                 <i class="fas fa-user-plus"></i>&nbsp;Add New User
@@ -143,8 +143,14 @@
                 axios.get("api/user").then(({data}) => (this.users = data));
             },
             createUser(){
+                this.form.reset();
                 this.$Progress.start();
-                this.form.post('api/user');
+                this.form.post('api/user');  
+                $('#addUser').modal('hide');              
+                Toast.fire({
+                    type: 'success',
+                    title: 'User Created Successfully !!!'
+                });
                 this.$Progress.end();
             }
         },
